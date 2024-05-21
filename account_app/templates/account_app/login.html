@@ -11,15 +11,14 @@
             <div class=" mb-5 contact-us" style="">
                 <div class="contact-form bg-light p-30">
                     <div id="success"></div>
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                    <form method="post">
+                        {% csrf_token %}
                         <div class="control-group">
-                            <input type="text" class="form-control" id="phone" placeholder="Your phone"
-                                required="required" data-validation-required-message="Please enter your phone" />
+                            {{ form.phone }}
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <input type="password" class="form-control" id="password" placeholder="Your password"
-                                required="required" data-validation-required-message="Please enter your password" />
+                            {{ form.password }}
                             <p class="help-block text-danger"></p>
                         </div>
                         <div>
