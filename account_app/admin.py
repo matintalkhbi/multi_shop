@@ -38,6 +38,7 @@ class UserCreationForm(forms.ModelForm):
         return user
 
 
+
 class UserChangeForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on
     the user, but replaces the password field with admin's
@@ -48,7 +49,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ["phone","email", "password", "is_active", "is_admin"]
+        fields = ["phone", "email", "password", "is_active", "is_admin"]
 
 
 class UserAdmin(BaseUserAdmin):
@@ -59,7 +60,7 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ["phone", "email" ,"fullname","is_admin"]
+    list_display = ["phone", "email", "is_admin"]
     list_filter = ["is_admin"]
     fieldsets = [
         (None, {"fields": ["phone", "password"]}),
@@ -73,7 +74,7 @@ class UserAdmin(BaseUserAdmin):
             None,
             {
                 "classes": ["wide"],
-                "fields": ["phone","email", "fullname", "password1", "password2"],
+                "fields": ["phone", "fullname", "email", "fullname", "password1", "password2"],
             },
         ),
     ]

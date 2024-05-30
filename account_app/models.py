@@ -38,6 +38,8 @@ class User(AbstractBaseUser):
         verbose_name="ایمیل",
         max_length=255,
         unique=True,
+        null=True,  # افزودن null=True اگر ایمیل می‌تواند خالی باشد
+        blank=True  # افزودن blank=True اگر ایمیل می‌تواند خالی باشد
     )
     fullname = models.CharField(max_length=50, verbose_name="نام کامل")
     phone = models.CharField(max_length=12, unique=True, verbose_name="شماره تلفن")
@@ -52,8 +54,9 @@ class User(AbstractBaseUser):
     class Meta:
         verbose_name = "کاربر"
         verbose_name_plural = "کاربرها"
+
     def __str__(self):
-        return self.email
+        return self.phone  # برگرداندن شماره تلفن به جای ایمیل
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
