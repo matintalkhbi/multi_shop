@@ -1,6 +1,9 @@
+from django.core import validators
+from django.core.validators import RegexValidator
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django import forms
+
 
 
 class UserManager(BaseUserManager):
@@ -79,3 +82,17 @@ class LoginForm(forms.Form):
     phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
+class RegisterForm(forms.Form):
+    phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validators.MaxLengthValidator(11)])
+
+class CheckOtpForm(forms.Form):
+    code = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validators.MaxLengthValidator(4)])
+
+
+class Otp(models.Model):
+    phone = models.CharField(max_length=11)
+    code = models.SmallIntegerField()
+    expiration_data = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.phone
