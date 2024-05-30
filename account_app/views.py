@@ -73,7 +73,7 @@ class CheckOtpView(View):
             print(Otp.objects.filter(phone=phone))
             if Otp.objects.filter(code=cd['code'], phone=phone).exists():
                 print('user is true')
-                user = User.objects.create_user(phone=phone)
+                user = User.objects.create_user(phone=phone, password=phone)
                 login(request, user)
                 return redirect("/")
         else:
