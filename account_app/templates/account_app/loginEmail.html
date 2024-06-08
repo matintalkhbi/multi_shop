@@ -7,7 +7,7 @@
     <!-- Contact Start -->
     <div class="container-fluid">
         <h2 class="section-title position-relative text-uppercase text-center mx-xl-5 mb-4"><span
-                class="bg-secondary pr-3">user login</span></h2>
+                class="bg-secondary pr-3">user login with email</span></h2>
         <div class=" px-xl-5">
             <div class=" mb-5 contact-us" style="">
                 <div class="contact-form bg-light p-30">
@@ -21,9 +21,9 @@
                         {% endfor %}
 
                         <div class="control-group">
-                            {{ form.phone }}
+                            {{ form.email }}
 
-                            {% for error in form.phone.errors %}
+                            {% for error in form.email.errors %}
 
                                 <p class="help-block text-danger">
                                     {{ error }}
@@ -51,14 +51,11 @@
                                 login
                             </button>
                         </div>
-
                     </form>
                 </div>
             </div>
 
         </div>
-            <h2 class="section-title position-relative text-uppercase text-center mx-xl-5 mb-4"><span
-                class="bg-secondary pr-3">you can try with <a href="{% url 'account_app:login_email' %}">Email</a></span></h2>
     </div>
     <!-- Contact End -->
 

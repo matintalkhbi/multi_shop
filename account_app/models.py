@@ -41,10 +41,10 @@ class User(AbstractBaseUser):
         verbose_name="ایمیل",
         max_length=255,
         unique=True,
-        null=True,  # افزودن null=True اگر ایمیل می‌تواند خالی باشد
-        blank=True  # افزودن blank=True اگر ایمیل می‌تواند خالی باشد
+        null=True,
+        blank=True
     )
-    fullname = models.CharField(max_length=50, verbose_name="نام کامل")
+    fullname = models.CharField(max_length=50,null=True,blank=True, verbose_name="نام کامل")
     phone = models.CharField(max_length=12, unique=True, verbose_name="شماره تلفن")
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False, verbose_name="ادمین")
@@ -82,6 +82,10 @@ class LoginForm(forms.Form):
     phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
+class LoginFormEmail(forms.Form):
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
 class RegisterForm(forms.Form):
     phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validators.MaxLengthValidator(11)])
 
@@ -90,7 +94,8 @@ class CheckOtpForm(forms.Form):
 
 
 class Otp(models.Model):
-    phone = models.CharField(max_length=11)
+    token = models.CharField(max_length=1000 , unique=True)
+    phone = models.CharField(max_length=11, unique=True)
     code = models.SmallIntegerField()
     expiration_data = models.DateField(auto_now_add=True)
 

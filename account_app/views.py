@@ -2,8 +2,10 @@ from random import randint
 
 from django.shortcuts import render, redirect, reverse
 from django.views import View
-from .models import LoginForm, RegisterForm, Otp, CheckOtpForm, User
+from .models import LoginForm, LoginFormEmail, RegisterForm, Otp, CheckOtpForm, User
 from django.contrib.auth import authenticate, login, logout
+from django.utils.crypto import get_random_string
+from uuid import uuid4
 from .sms import verification
 
 
@@ -32,6 +34,28 @@ class UserLogin(View):
         return render(request, "account_app/login.html", {'form': form})
 
 
+class UserLoginEmail(View):
+    def get(self, request):
+        form = LoginFormEmail()
+        return render(request, "account_app/loginEmail.html", {'form': form})
+
+    def post(self, request):
+        form = LoginFormEmail(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(username=(User.objects.get(email=cd['email']).phone), password=cd['password'])
+            print(user.email)
+            print(User.objects.get(email=cd['email']).is_admin)
+            if user is not None:
+                login(request, user)
+                return redirect("/")
+            else:
+                form.add_error('email', 'Username or password is incorrect')
+        else:
+            form.add_error('email', 'Username or password is incorrect')
+        return render(request, "account_app/loginEmail.html", {'form': form})
+
+
 class RegisterView(View):
     def get(self, request):
         form = RegisterForm()
@@ -42,13 +66,12 @@ class RegisterView(View):
         if form.is_valid():
             randcode = randint(1000,9999)
             cd = form.cleaned_data
-            # SMS fix
-            # SMS.verifications(randcode, cd)
-            print(cd['phone'])
-            verification(str(cd['phone']), str(randcode))
-            Otp.objects.create(phone=cd['phone'] , code=randcode)
+            # send sms
+            # verification(str(cd['phone']), str(randcode))
+            token = str(uuid4())
+            Otp.objects.create(phone=cd['phone'] , code=randcode, token=token)
 
-            return redirect(reverse('account_app:check_otp')+f'?phone={cd["phone"]}')
+            return redirect(reverse('account_app:check_otp')+f'?token={token}')
 
         else:
             form.add_error("phone", "invalid data")
@@ -62,19 +85,15 @@ class CheckOtpView(View):
         return render(request, "account_app/check_otp.html" , {'form': form})
 
     def post(self, request):
-        phone = request.GET.get('phone')
+        token = request.GET.get('token')
         form = CheckOtpForm(request.POST)
-        print('user is not true')
         if form.is_valid():
             cd = form.cleaned_data
-            print('user')
-            print(Otp.objects.all())
-            print(phone)
-            print(Otp.objects.filter(phone=phone))
-            if Otp.objects.filter(code=cd['code'], phone=phone).exists():
-                print('user is true')
-                user = User.objects.create_user(phone=phone, password=phone)
+            if Otp.objects.filter(code=cd['code'], token=token).exists():
+                otp = Otp.objects.get(token=token)
+                user , is_create= User.objects.get_or_create(phone=otp.phone, password=otp.phone)
                 login(request, user)
+                Otp.objects.get(token=token).delete()
                 return redirect("/")
         else:
             form.add_error("phone", "invalid data")
