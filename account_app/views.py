@@ -2,7 +2,7 @@ from random import randint
 
 from django.shortcuts import render, redirect, reverse
 from django.views import View
-from .models import LoginForm, LoginFormEmail, RegisterForm, Otp, CheckOtpForm, User
+from .models import LoginForm, LoginFormEmail, RegisterForm, Otp, CheckOtpForm, User ,Profile
 from django.contrib.auth import authenticate, login, logout
 from django.utils.crypto import get_random_string
 from uuid import uuid4
@@ -13,6 +13,12 @@ from .sms import verification
 
 # def login(request):
 #     return render(request , template_name="account_app/login.html")
+
+class ProfileView(View):
+    def get(self, request):
+        form = Profile()
+        return render(request,"account_app/profile.html", {'form': form})
+
 
 class UserLogin(View):
     def get(self, request):
@@ -34,6 +40,7 @@ class UserLogin(View):
         return render(request, "account_app/login.html", {'form': form})
 
 
+
 class UserLoginEmail(View):
     def get(self, request):
         form = LoginFormEmail()
@@ -48,6 +55,7 @@ class UserLoginEmail(View):
             print(User.objects.get(email=cd['email']).is_admin)
             if user is not None:
                 login(request, user)
+                print(user.is_authenticated)
                 return redirect("/")
             else:
                 form.add_error('email', 'Username or password is incorrect')
@@ -65,11 +73,12 @@ class RegisterView(View):
         form = RegisterForm(request.POST)
         if form.is_valid():
             randcode = randint(1000,9999)
+            print(randcode)
             cd = form.cleaned_data
             # send sms
             # verification(str(cd['phone']), str(randcode))
             token = str(uuid4())
-            Otp.objects.create(phone=cd['phone'] , code=randcode, token=token)
+            Otp.objects.create(phone=cd['phone'],code=randcode, token=token)
 
             return redirect(reverse('account_app:check_otp')+f'?token={token}')
 
@@ -98,3 +107,8 @@ class CheckOtpView(View):
         else:
             form.add_error("phone", "invalid data")
         return render(request, "account_app/check_otp.html" , {'form': form})
+
+
+def Logout(request):
+    logout(request)
+    return redirect(reverse('account_app:login'))

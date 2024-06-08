@@ -77,6 +77,10 @@ class User(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
+class Profile(models.Model):
+    phone = models.CharField(max_length=12)
+    password = models.CharField(max_length=50)
+    email = models.EmailField()
 
 class LoginForm(forms.Form):
     phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
