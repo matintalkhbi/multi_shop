@@ -1,10 +1,36 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
+from django.http import HttpResponseBadRequest
+from product_app.models import Product
+from .cart_module import Cart
 
-
-# Create your views here.
-
-
-class CartView(View):
+class CartDetailView(View):
     def get(self, request):
-        return render(request , "cart_app/cart_details.html")
+        cart = Cart(request)
+        return render(request, "cart_app/cart_details.html", {'cart': cart})
+
+class CartAddView(View):
+    def post(self, request, pk):
+        product = get_object_or_404(Product, id=pk)
+        size = request.POST.get('size')
+        color = request.POST.get('color')
+        quantity = request.POST.get('quantity')
+
+        if product.size.all() and not size:
+            return HttpResponseBadRequest("Size is required.")
+        if product.color.all() and not color:
+            return HttpResponseBadRequest("Color is required.")
+        if not quantity or not quantity.isdigit() or int(quantity) <= 0:
+            return HttpResponseBadRequest("Valid quantity is required.")
+
+        cart = Cart(request)
+        cart.add(product=product, size=size, color=color, quantity=int(quantity))  # Convert quantity to integer
+
+        print('Product added:', {
+            'product_id': product.id,
+            'size': size,
+            'color': color,
+            'quantity': int(quantity)
+        })
+
+        return redirect("cart_app:cart_details")
