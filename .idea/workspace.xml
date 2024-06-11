@@ -5,15 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f83bf5f7-d470-4323-beb6-2a14c9518d9e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cart_app/cart_module.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/products/Screenshot_2024-05-15_162826.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart_app/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart_app/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart_app/migrations/0002_rename_qunatity_orderitem_quantity_and_more.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart_app/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart_app/cart_module.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/cart_module.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart_app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cart_app/templates/cart_app/cart_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/templates/cart_app/cart_details.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cart_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cart_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product_app/templates/product_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/product_app/templates/product_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,28 +52,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Django Server.multi_shop.executor": "Run",
-    "Python.cart_module.executor": "Run",
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/Matin/Desktop/my site/django/multi_shop/multi_shop/account_app/templates/account_app",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Django Server.multi_shop.executor&quot;: &quot;Run&quot;,
+    &quot;Python.cart_module.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Matin/Desktop/my site/django/multi_shop/multi_shop/account_app/templates/account_app&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Matin\Desktop\my site\django\multi_shop\multi_shop\account_app\templates\account_app" />
@@ -164,7 +166,8 @@
       <workItem from="1717848625131" duration="1285000" />
       <workItem from="1717936263088" duration="4503000" />
       <workItem from="1718010852321" duration="6147000" />
-      <workItem from="1718031994813" duration="3700000" />
+      <workItem from="1718031994813" duration="3947000" />
+      <workItem from="1718099980295" duration="3685000" />
     </task>
     <task id="LOCAL‎−۰۰۰۰۱" summary="fixup! login regester template and view and model sms view sms">
       <option name="closed" value="true" />
@@ -178,6 +181,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

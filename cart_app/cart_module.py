@@ -15,8 +15,10 @@ class Cart:
     def __iter__(self):
         cart = self.cart.copy()
         for item in cart.values():
+            product = Product.objects.get(pk=int(item['id']))
             item['product'] = Product.objects.get(pk=int(item['id']))
             item['total'] = int(item['price']) * int(item['quantity'])
+            item['unique_id'] = self.unique_id_generator(product.id , item['color'] , item['size'])
             yield item
 
     def unique_id_generator(self, id, color, size):
@@ -34,6 +36,12 @@ class Cart:
             }
         self.cart[unique]['quantity'] += int(quantity)  # Ensure quantity is an integer
         self.save()
+
+    def delete(self, id):
+        if id in self.cart:
+            del self.cart[id]
+            self.save()
+
 
     def save(self):
         self.session[CART_SESSION_ID] = self.cart

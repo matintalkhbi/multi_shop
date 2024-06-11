@@ -12,8 +12,8 @@ class CartDetailView(View):
 class CartAddView(View):
     def post(self, request, pk):
         product = get_object_or_404(Product, id=pk)
-        size = request.POST.get('size')
-        color = request.POST.get('color')
+        size = request.POST.get('size' , 'empty')
+        color = request.POST.get('color' , 'empty')
         quantity = request.POST.get('quantity')
 
         if product.size.all() and not size:
@@ -33,4 +33,12 @@ class CartAddView(View):
             'quantity': int(quantity)
         })
 
+        return redirect("cart_app:cart_details")
+
+
+class CartDeleteView(View):
+    def get(self, request, pk):
+        print(pk)
+        cart = Cart(request)
+        cart.delete(pk)
         return redirect("cart_app:cart_details")
