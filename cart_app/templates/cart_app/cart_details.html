@@ -14,9 +14,10 @@
                         <th>image</th>
                         <th>Title</th>
                         <th>Price</th>
-                        <th>Quantity</th>
+                        <th>Discount</th>
                         <th>color</th>
                         <th>size</th>
+                        <th>Quantity</th>
                         <th>Total</th>
                         <th>Remove</th>
                     </tr>
@@ -30,6 +31,7 @@
                             <td class="align-middle">{{ item.product.title }}
                             </td>
                             <td class="align-middle">${{ item.price }}</td>
+                            <td class="align-middle">%{{ item.discount }}</td>
                             <td class="align-middle">
                                 {{ item.quantity }}
                             </td>

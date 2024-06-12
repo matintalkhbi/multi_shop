@@ -18,7 +18,8 @@ class Cart:
         for item in cart.values():
             product = Product.objects.get(pk=int(item['id']))
             item['product'] = Product.objects.get(pk=int(item['id']))
-            item['total'] = int(item['price']) * int(item['quantity'])
+            item['total'] = int(item['price']) * int(item['quantity']) * (100 - (int(item['discount']) / 100))
+            print(item['total'])
             item['unique_id'] = self.unique_id_generator(product.id, item['color'], item['size'])
             yield item
 
@@ -33,7 +34,8 @@ class Cart:
                 'price': str(product.price),
                 'color': color,
                 'size': size,
-                'id': str(product.id)
+                'id': str(product.id),
+                'discount': int(product.discount),
             }
         self.cart[unique]['quantity'] += int(quantity)
         self.save()
@@ -45,9 +47,13 @@ class Cart:
 
     def total(self):
         cart = self.cart.values()
-        total = sum(int(item['price']) * int(item['quantity']) for item in cart)
+
+        total = sum(int(item['price']) * int(item['quantity']) * (100 - (int(item['discount']) / 100)) for item in cart)
         return total
 
     def save(self):
         self.session[CART_SESSION_ID] = self.cart
         self.session.modified = True
+
+    def remove_cart(self):
+        del self.session[CART_SESSION_ID]

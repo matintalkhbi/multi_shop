@@ -33,7 +33,7 @@ class CartAddView(View):
             'product_id': product.id,
             'size': size,
             'color': color,
-            'quantity': int(quantity)
+            'quantity': int(quantity),
         })
 
         return redirect("cart_app:cart_details")
@@ -58,14 +58,17 @@ class OrderCreationView(View):
         cart = Cart(request)
         order = Order.objects.create(user=request.user, total_price=cart.total())
         for item in cart:
-            OrderItem.objects.create(order=order, product=item['product'], color=item['color'], size=item['size'][0],
-                                     quantity=item['quantity'], price=item['price'])
+            OrderItem.objects.create(order=order, product=item['product'], color=item['color'], size=item['size'],
+                                     quantity=item['quantity'], price=item['price'] , discount=item['discount'])
+
             print('Order created:', {
                 'order_id': order.id,
                 'product': item['product'],
                 'color': item['color'],
                 'size': item['size'],
                 'quantity': item['quantity'],
-                'price': item['price']
+                'price': item['price'],
+                # 'discount': item['discount']
             })
+        Cart.remove_cart(cart)
         return redirect('cart_app:order_details', order.id)

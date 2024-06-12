@@ -22,6 +22,7 @@ class OrderItem(models.Model):
     size = models.CharField(max_length=50)
     # color = models.ForeignKey(Color, on_delete=models.CASCADE, related_name='items')
     color = models.CharField(max_length=50)
+    discount = models.SmallIntegerField(default=0)
     quantity = models.SmallIntegerField(default=0)
     price = models.PositiveIntegerField(default=0)
 
