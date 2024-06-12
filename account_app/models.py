@@ -105,3 +105,24 @@ class Otp(models.Model):
 
     def __str__(self):
         return self.phone
+
+
+
+class Address(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE , related_name='address')
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField(blank=True , null=True )
+    phone = models.CharField(max_length=12)
+    address = models.CharField(max_length=300)
+    postal_code = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.phone
+
+
+class AddressCreationsForm(forms.ModelForm):
+    user = forms.IntegerField(required=False)
+    class Meta:
+        model = Address
+        fields = "__all__"

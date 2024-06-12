@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 
-from account_app.models import User, Otp
+from account_app.models import User, Otp , Address
 
 
 class UserCreationForm(forms.ModelForm):
@@ -83,7 +83,7 @@ class UserAdmin(BaseUserAdmin):
     ordering = ["phone"]
     filter_horizontal = []
 
-
+admin.site.register(Address)
 # Now register the new UserAdmin...
 admin.site.register(User, UserAdmin)
 admin.site.register(Otp)

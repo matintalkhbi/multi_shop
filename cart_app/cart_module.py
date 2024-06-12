@@ -2,6 +2,7 @@ from product_app.models import Product
 
 CART_SESSION_ID = 'cart'
 
+
 class Cart:
     def __init__(self, request):
         self.session = request.session
@@ -18,7 +19,7 @@ class Cart:
             product = Product.objects.get(pk=int(item['id']))
             item['product'] = Product.objects.get(pk=int(item['id']))
             item['total'] = int(item['price']) * int(item['quantity'])
-            item['unique_id'] = self.unique_id_generator(product.id , item['color'] , item['size'])
+            item['unique_id'] = self.unique_id_generator(product.id, item['color'], item['size'])
             yield item
 
     def unique_id_generator(self, id, color, size):
@@ -34,7 +35,7 @@ class Cart:
                 'size': size,
                 'id': str(product.id)
             }
-        self.cart[unique]['quantity'] += int(quantity)  # Ensure quantity is an integer
+        self.cart[unique]['quantity'] += int(quantity)
         self.save()
 
     def delete(self, id):
@@ -42,6 +43,10 @@ class Cart:
             del self.cart[id]
             self.save()
 
+    def total(self):
+        cart = self.cart.values()
+        total = sum(int(item['price']) * int(item['quantity']) for item in cart)
+        return total
 
     def save(self):
         self.session[CART_SESSION_ID] = self.cart

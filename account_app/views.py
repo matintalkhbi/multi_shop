@@ -2,7 +2,7 @@ from random import randint
 
 from django.shortcuts import render, redirect, reverse
 from django.views import View
-from .models import LoginForm, LoginFormEmail, RegisterForm, Otp, CheckOtpForm, User ,Profile
+from .models import LoginForm, LoginFormEmail, RegisterForm, Otp, CheckOtpForm, User ,Profile , AddressCreationsForm
 from django.contrib.auth import authenticate, login, logout
 from django.utils.crypto import get_random_string
 from uuid import uuid4
@@ -112,3 +112,18 @@ class CheckOtpView(View):
 def Logout(request):
     logout(request)
     return redirect(reverse('account_app:login'))
+
+class AddAddressView(View):
+
+    def get(self, request):
+        form = AddressCreationsForm()
+        return render(request, "account_app/add_address.html", {'form': form})
+    def post(self,request):
+        form = AddressCreationsForm(request.POST)
+        if form.is_valid():
+            address = form.save(commit=False)
+            address.user = request.user
+            address.save()
+
+        return render(request, "account_app/add_address.html", {'form': form})
+
