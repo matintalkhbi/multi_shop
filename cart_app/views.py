@@ -3,7 +3,7 @@ from django.views import View
 from django.http import HttpResponseBadRequest
 from product_app.models import Product
 from .cart_module import Cart
-from .models import Order, OrderItem
+from .models import Order, OrderItem, DiscountCode
 
 
 class CartDetailView(View):
@@ -59,7 +59,7 @@ class OrderCreationView(View):
         order = Order.objects.create(user=request.user, total_price=cart.total())
         for item in cart:
             OrderItem.objects.create(order=order, product=item['product'], color=item['color'], size=item['size'],
-                                     quantity=item['quantity'], price=item['price'] , discount=item['discount'])
+                                     quantity=item['quantity'], price=item['price'], discount=item['discount'])
 
             print('Order created:', {
                 'order_id': order.id,
@@ -71,4 +71,19 @@ class OrderCreationView(View):
                 # 'discount': item['discount']
             })
         Cart.remove_cart(cart)
+        return redirect('cart_app:order_details', order.id)
+
+
+class ApplyDiscountView(View):
+    def post(self, request, pk):
+        code = request.POST.get('discount_code')
+        order = get_object_or_404(Order, id=pk)
+        discount_code = get_object_or_404(DiscountCode, name=code)
+        print(discount_code)
+        if discount_code.quantity == 0:
+            return redirect("cart_app:order_details", order.id)
+        order.total_price -= order.total_price * discount_code.discount / 100
+        order.save()
+        discount_code.quantity -= 1
+        discount_code.save()
         return redirect('cart_app:order_details', order.id)

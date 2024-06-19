@@ -26,5 +26,19 @@ class OrderItem(models.Model):
     quantity = models.SmallIntegerField(default=0)
     price = models.PositiveIntegerField(default=0)
 
+    def total_price(self):
+        price = self.price * self.quantity
+        discount = (100 - self.discount)/100
+        return price * discount
+
     def __str__(self):
         return self.order.user.phone
+
+
+class DiscountCode(models.Model):
+    name = models.CharField(max_length=50 , unique=True)
+    discount = models.SmallIntegerField(default=0)
+    quantity = models.SmallIntegerField(default=1)
+
+    def __str__(self):
+        return self.name
