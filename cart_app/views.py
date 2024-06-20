@@ -4,7 +4,9 @@ from django.http import HttpResponseBadRequest
 from product_app.models import Product
 from .cart_module import Cart
 from .models import Order, OrderItem, DiscountCode
-
+from django.conf import settings
+import requests
+import json
 
 class CartDetailView(View):
     def get(self, request):
@@ -74,16 +76,97 @@ class OrderCreationView(View):
         return redirect('cart_app:order_details', order.id)
 
 
+# class ApplyDiscountView(View):
+#     def post(self, request, pk):
+#         code = request.POST.get('discount_code')
+#         order = get_object_or_404(Order, id=pk)
+#         discount_code = get_object_or_404(DiscountCode, name=code)
+#         print(discount_code)
+#         if discount_code.quantity == 0:
+#             return redirect("cart_app:order_details", order.id)
+#         order.total_price -= order.total_price * discount_code.discount / 100
+#         order.save()
+#         discount_code.quantity -= 1
+#         discount_code.save()
+#         return redirect('cart_app:order_details', order.id)
+
+from django.shortcuts import get_object_or_404, redirect
+from django.views import View
+from django.contrib import messages
+from .models import Order, DiscountCode
+
 class ApplyDiscountView(View):
     def post(self, request, pk):
         code = request.POST.get('discount_code')
         order = get_object_or_404(Order, id=pk)
-        discount_code = get_object_or_404(DiscountCode, name=code)
-        print(discount_code)
-        if discount_code.quantity == 0:
+
+        if order.discount_code:
+            # اضافه کردن پیام خطا
+            messages.error(request, 'A discount code has already been applied to this order.')
             return redirect("cart_app:order_details", order.id)
+
+        discount_code = get_object_or_404(DiscountCode, name=code)
+
+        if discount_code.quantity == 0:
+            messages.error(request, 'This discount code is no longer available.')
+            return redirect("cart_app:order_details", order.id)
+
         order.total_price -= order.total_price * discount_code.discount / 100
+        order.discount_code = discount_code
         order.save()
+
         discount_code.quantity -= 1
         discount_code.save()
+
+        messages.success(request, 'Discount code applied successfully.')
         return redirect('cart_app:order_details', order.id)
+
+
+
+
+
+
+
+sandbox = 'www'
+
+ZP_API_REQUEST = f"https://{sandbox}.zarinpal.com/pg/rest/WebGate/PaymentRequest.json"
+ZP_API_VERIFY = f"https://{sandbox}.zarinpal.com/pg/rest/WebGate/PaymentVerification.json"
+ZP_API_STARTPAY = f"https://{sandbox}.zarinpal.com/pg/StartPay/"
+
+amount = 1000  # Rial / Required
+description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  # Required
+phone = 'YOUR_PHONE_NUMBER'  # Optional
+# Important: need to edit for realy server.
+CallbackURL = 'http://127.0.0.1:8000/cart/verify/'
+
+
+class SendRequestView(View):
+    def post(self, request , pk):
+        order = get_object_or_404(Order, id=pk , user=request.user)
+        data = {
+            "MerchantID": settings.MERCHANT,
+            "Amount": order.total_price,
+            "Description": description,
+            "Phone": request.user.phone,
+            "CallbackURL": CallbackURL,
+
+        }
+        data = json.dumps(data)
+        # set content length by data
+        headers = {'content-type': 'application/json', 'content-length': str(len(data))}
+        try:
+            response = requests.post(ZP_API_REQUEST, data=data, headers=headers, timeout=10)
+
+            if response.status_code == 200:
+                response = response.json()
+                if response['Status'] == 100:
+                    return {'status': True, 'url': ZP_API_STARTPAY + str(response['Authority']),
+                            'authority': response['Authority']}
+                else:
+                    return {'status': False, 'code': str(response['Status'])}
+            return response
+
+        except requests.exceptions.Timeout:
+            return {'status': False, 'code': 'timeout'}
+        except requests.exceptions.ConnectionError:
+            return {'status': False, 'code': 'connection error'}

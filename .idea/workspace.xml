@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f83bf5f7-d470-4323-beb6-2a14c9518d9e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cart_app/migrations/0008_discountcode.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cart_app/migrations/0009_alter_discountcode_name.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart_app/migrations/0010_order_address_link.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart_app/migrations/0011_order_discount_code.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart_app/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart_app/cart_module.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/cart_module.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cart_app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart_app/templates/cart_app/cart_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/templates/cart_app/cart_details.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cart_app/templates/cart_app/order_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/templates/cart_app/order_detail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cart_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cart_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/views.py" afterDir="false" />
@@ -27,8 +26,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -80,6 +79,8 @@
       <recent name="C:\Users\Matin\Desktop\my site\django\multi_shop\multi_shop\statics" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Matin\Desktop\my site\django\multi_shop\multi_shop\cart_app\custom_filters" />
+      <recent name="C:\Users\Matin\Desktop\my site\django\multi_shop\multi_shop\cart_app\thousand_separator" />
       <recent name="C:\Users\Matin\Desktop\my site\django\multi_shop\multi_shop\home_app\templates\home" />
     </key>
   </component>
@@ -170,7 +171,8 @@
       <workItem from="1718103930812" duration="2810000" />
       <workItem from="1718176060508" duration="12448000" />
       <workItem from="1718277100997" duration="357000" />
-      <workItem from="1718808550975" duration="362000" />
+      <workItem from="1718808550975" duration="2600000" />
+      <workItem from="1718876524771" duration="934000" />
     </task>
     <task id="LOCAL‎−۰۰۰۰۱" summary="fixup! login regester template and view and model sms view sms">
       <option name="closed" value="true" />

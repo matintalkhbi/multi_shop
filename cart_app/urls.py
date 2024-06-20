@@ -11,4 +11,5 @@ urlpatterns = [
     path('order/<int:id>' , views.OrderDetailView.as_view(), name='order_details'),
     path('order/add', views.OrderCreationView.as_view(), name='order_creation'),
     path('applydiscount/<int:pk>', views.ApplyDiscountView.as_view(), name='apply_discount'),
+    path('sendrequest', views.SendRequestView.as_view(), name='send_request'),
 ]

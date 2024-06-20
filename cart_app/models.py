@@ -3,13 +3,21 @@ from account_app.models import User
 from product_app.models import Product, Size, Color
 
 
+class DiscountCode(models.Model):
+    name = models.CharField(max_length=50 , unique=True)
+    discount = models.SmallIntegerField(default=0)
+    quantity = models.SmallIntegerField(default=1)
 
+    def __str__(self):
+        return self.name
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
     total_price = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     is_paid = models.BooleanField(default=False)
+    address_link = models.URLField(blank=True, null=True)
+    discount_code = models.ForeignKey(DiscountCode, null=True, blank=True, on_delete=models.SET_NULL, related_name='orders')
 
     def __str__(self):
         return self.user.phone
@@ -35,10 +43,4 @@ class OrderItem(models.Model):
         return self.order.user.phone
 
 
-class DiscountCode(models.Model):
-    name = models.CharField(max_length=50 , unique=True)
-    discount = models.SmallIntegerField(default=0)
-    quantity = models.SmallIntegerField(default=1)
 
-    def __str__(self):
-        return self.name
