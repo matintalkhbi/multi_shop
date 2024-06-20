@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f83bf5f7-d470-4323-beb6-2a14c9518d9e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cart_app/migrations/0012_order_original_price.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cart_app/migrations/0013_discountcode_end_date_discountcode_start_date.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart_app/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account_app/sms.py" beforeDir="false" afterPath="$PROJECT_DIR$/account_app/sms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cart_app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cart_app/templates/cart_app/order_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/templates/cart_app/order_detail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cart_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/urls.py" afterDir="false" />
@@ -173,7 +171,7 @@
       <workItem from="1718176060508" duration="12448000" />
       <workItem from="1718277100997" duration="357000" />
       <workItem from="1718808550975" duration="2600000" />
-      <workItem from="1718876524771" duration="2661000" />
+      <workItem from="1718876524771" duration="6662000" />
     </task>
     <task id="LOCAL‎−۰۰۰۰۱" summary="fixup! login regester template and view and model sms view sms">
       <option name="closed" value="true" />

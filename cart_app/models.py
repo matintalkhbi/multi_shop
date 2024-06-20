@@ -34,7 +34,7 @@ class Order(models.Model):
     discount_code = models.ForeignKey(DiscountCode, null=True, blank=True, on_delete=models.SET_NULL, related_name='orders')
 
     def __str__(self):
-        return self.user.username
+        return self.user.phone
 
 
 

@@ -94,19 +94,22 @@
                 </div>
 
                 {% if request.user.address.all %}
-                    <select name="" id="" class="form-control" aria-label="Address">
-                        {% for address in request.user.address.all %}
-                            <option value="{{ address.id }}">Address: {{ address.address }}, Postal
-                                Code: {{ address.postal_code }}, Phone: {{ address.phone }}</option>
-                        {% endfor %}
-                    </select>
-                    <a href="{% url 'account_app:add_address' %}?next={% url 'cart_app:order_details' order.id %}"
-                       class="btn btn-block btn-primary font-weight-bold my-3 py-3">Are you want to add the address?
-                        Click me ...
-                    </a>
-                    <a href="{% url 'cart_app:order_creation' %}"
-                       class="btn btn-block btn-success font-weight-bold my-3 py-3">Pay
-                    </a>
+                    <form action="{% url 'cart_app:send_request' order.id%}" method="post">
+                    {% csrf_token %}
+                        <select name="address" id="" class="form-control" aria-label="Address">
+                            {% for address in request.user.address.all %}
+                                <option value="{{ address.id }}">Address: {{ address.address }}, Postal
+                                    Code: {{ address.postal_code }}, Phone: {{ address.phone }}</option>
+                            {% endfor %}
+                        </select>
+                        <a href="{% url 'account_app:add_address' %}?next={% url 'cart_app:order_details' order.id %}"
+                           class="btn btn-block btn-primary font-weight-bold my-3 py-3">Are you want to add the address?
+                            Click me ...
+                        </a>
+                        <a href="{% url 'cart_app:order_creation' %}"
+                           class="btn btn-block btn-success font-weight-bold my-3 py-3">Pay
+                        </a>
+                    </form>
                 {% else %}
                     <a href="{% url 'account_app:add_address' %}?next={% url 'cart_app:order_details' order.id %}"
                        class="btn btn-block btn-primary font-weight-bold my-3 py-3">You don't have any address, add one

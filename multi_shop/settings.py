@@ -141,3 +141,8 @@ MESSAGE_TAGS = {
     message_constants.WARNING: 'warning',
     message_constants.ERROR: 'danger',
 }
+
+
+MERCHANT = "00000000-0000-0000-0000-000000000000"
+
+SANDBOX = True

@@ -12,5 +12,6 @@ urlpatterns = [
     path('order/add', views.OrderCreationView.as_view(), name='order_creation'),
     path('apply-discount/<int:pk>/', views.ApplyDiscountView.as_view(), name='apply_discount'),
     path('remove-discount/<int:pk>/', views.RemoveDiscountView.as_view(), name='remove_discount'),
-    path('sendrequest', views.SendRequestView.as_view(), name='send_request'),
+    path('sendrequest/<int:pk>/', views.SendRequestView.as_view(), name='send_request'),
+    path('verify',views.VerifyView.as_view(), name='verify_request'),
 ]

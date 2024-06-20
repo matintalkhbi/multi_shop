@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.http import HttpResponseBadRequest
+
+from account_app.models import Address
 from product_app.models import Product
 from .cart_module import Cart
 from .models import Order, OrderItem, DiscountCode
 from django.conf import settings
 import requests
 import json
+from account_app import sms
 
 class CartDetailView(View):
     def get(self, request):
@@ -73,6 +76,7 @@ class OrderCreationView(View):
                 # 'discount': item['discount']
             })
         Cart.remove_cart(cart)
+
         return redirect('cart_app:order_details', order.id)
 
 
@@ -95,6 +99,7 @@ from django.views import View
 from django.contrib import messages
 from django.utils import timezone
 from .models import Order, DiscountCode
+
 
 class ApplyDiscountView(View):
     def post(self, request, pk):
@@ -129,6 +134,7 @@ class ApplyDiscountView(View):
         messages.success(request, 'Discount code applied successfully.')
         return redirect('cart_app:order_details', order.id)
 
+
 class RemoveDiscountView(View):
     def post(self, request, pk):
         order = get_object_or_404(Order, id=pk)
@@ -150,7 +156,6 @@ class RemoveDiscountView(View):
         return redirect('cart_app:order_details', order.id)
 
 
-
 sandbox = 'www'
 
 ZP_API_REQUEST = f"https://{sandbox}.zarinpal.com/pg/rest/WebGate/PaymentRequest.json"
@@ -165,15 +170,19 @@ CallbackURL = 'http://127.0.0.1:8000/cart/verify/'
 
 
 class SendRequestView(View):
-    def post(self, request , pk):
-        order = get_object_or_404(Order, id=pk , user=request.user)
+    def post(self, request, pk):
+        order = get_object_or_404(Order, id=pk, user=request.user)
+        address = get_object_or_404(Address, id=pk)
+        order.address = f"Address: {address.address}, Postal_Code: {address.postal_code}, Phone: {address.phone}"
+        order.save()
+        request.session['order_id'] = str(order.id)
+
         data = {
             "MerchantID": settings.MERCHANT,
             "Amount": order.total_price,
             "Description": description,
             "Phone": request.user.phone,
             "CallbackURL": CallbackURL,
-
         }
         data = json.dumps(data)
         # set content length by data
@@ -194,3 +203,31 @@ class SendRequestView(View):
             return {'status': False, 'code': 'timeout'}
         except requests.exceptions.ConnectionError:
             return {'status': False, 'code': 'connection error'}
+
+
+
+class VerifyView(View):
+    def get(self, request, pk):
+        order_id = request.session.get('order_id')
+        order = Order.objects.get(id=int(order_id))
+        data = {
+            "MerchantID": settings.MERCHANT,
+            "Amount": amount,
+
+        }
+
+        data = json.dumps(data)
+        # set content length by data
+        headers = {'content-type': 'application/json', 'content-length': str(len(data))}
+        response = requests.post(ZP_API_VERIFY, data=data, headers=headers)
+
+        if response.status_code == 200:
+            response = response.json()
+            if response['Status'] == 100:
+                order.is_paid = True
+                order.save()
+                # sms.SendSMS(order.user.phone , order.total_price)
+                return {'status': True, 'RefID': response['RefID']}
+            else:
+                return {'status': False, 'code': str(response['Status'])}
+        return response
