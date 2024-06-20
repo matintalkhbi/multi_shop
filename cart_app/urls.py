@@ -14,4 +14,5 @@ urlpatterns = [
     path('remove-discount/<int:pk>/', views.RemoveDiscountView.as_view(), name='remove_discount'),
     path('sendrequest/<int:pk>/', views.SendRequestView.as_view(), name='send_request'),
     path('verify',views.VerifyView.as_view(), name='verify_request'),
+    path('orderpaid' , views.OrderPaidCompleted.as_view(), name='order_paid'),
 ]

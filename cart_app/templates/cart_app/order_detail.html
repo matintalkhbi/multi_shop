@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 
-
 {% block main %}
 
     <!-- Cart Start -->
@@ -19,7 +18,6 @@
                         <th>size</th>
                         <th>Quantity</th>
                         <th>Total</th>
-
                     </tr>
                     </thead>
                     <tbody class="align-middle">
@@ -28,25 +26,15 @@
                             <td class="align-middle"><img src="{{ item.product.image.url }}" alt=""
                                                           style="width: 50px;">
                             </td>
-                            <td class="align-middle">{{ item.product.title }}
-                            </td>
+                            <td class="align-middle">{{ item.product.title }}</td>
                             <td class="align-middle">${{ item.price }}</td>
                             <td class="align-middle">%{{ item.discount }}</td>
-                            <td class="align-middle">
-                                {{ item.quantity }}
-                            </td>
-                            <td class="align-middle">
-                                {{ item.color }}
-                            </td>
-                            <td class="align-middle">
-                                {{ item.size }}
-                            </td>
+                            <td class="align-middle">{{ item.quantity }}</td>
+                            <td class="align-middle">{{ item.color }}</td>
+                            <td class="align-middle">{{ item.size }}</td>
                             <td class="align-middle">${{ item.total_price }}</td>
-
                         </tr>
-
                     {% endfor %}
-
                     </tbody>
                 </table>
             </div>
@@ -54,9 +42,7 @@
                 <form class="mb-30" method="post" action="{% url 'cart_app:apply_discount' order.id %}">
                     {% csrf_token %}
                     <div class="input-group">
-                        <input type="text" name="discount_code" class="form-control border-0 p-4"
-                               placeholder="Discount Code" {% if order.discount_code %}
-                               value="{{ order.discount_code.name }}" disabled {% endif %}>
+                        <input type="text" name="discount_code" class="form-control border-0 p-4" placeholder="Discount Code" {% if order.discount_code %} value="{{ order.discount_code.name }}" disabled {% endif %}>
                         {% if not order.discount_code %}
                             <div class="input-group-append">
                                 <button class="btn btn-primary">Apply Coupon</button>
@@ -64,8 +50,6 @@
                         {% endif %}
                     </div>
                 </form>
-
-
 
                 {% if messages %}
                     <div class="mb-30">
@@ -82,8 +66,7 @@
                     </form>
                 {% endif %}
 
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cart Summary</span>
-                </h5>
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cart Summary</span></h5>
                 <div class="bg-light p-30 mb-5">
                     <div class="pt-2">
                         <div class="d-flex justify-content-between mt-2">
@@ -94,29 +77,20 @@
                 </div>
 
                 {% if request.user.address.all %}
-                    <form action="{% url 'cart_app:send_request' order.id%}" method="post">
-                    {% csrf_token %}
+                    <form action="{% url 'cart_app:send_request' order.id %}" method="post">
+                        {% csrf_token %}
                         <select name="address" id="" class="form-control" aria-label="Address">
                             {% for address in request.user.address.all %}
-                                <option value="{{ address.id }}">Address: {{ address.address }}, Postal
-                                    Code: {{ address.postal_code }}, Phone: {{ address.phone }}</option>
+                                <option value="{{ address.id }}">Address: {{ address.address }}, Postal Code: {{ address.postal_code }}, Phone: {{ address.phone }}</option>
                             {% endfor %}
                         </select>
-                        <a href="{% url 'account_app:add_address' %}?next={% url 'cart_app:order_details' order.id %}"
-                           class="btn btn-block btn-primary font-weight-bold my-3 py-3">Are you want to add the address?
-                            Click me ...
-                        </a>
-                        <a href="{% url 'cart_app:order_creation' %}"
-                           class="btn btn-block btn-success font-weight-bold my-3 py-3">Pay
-                        </a>
+                        <a href="{% url 'account_app:add_address' %}?next={% url 'cart_app:order_details' order.id %}" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Are you want to add the address? Click me ...</a>
+                        <button class="btn btn-block btn-success font-weight-bold my-3 py-3">Pay</button>
                     </form>
                 {% else %}
-                    <a href="{% url 'account_app:add_address' %}?next={% url 'cart_app:order_details' order.id %}"
-                       class="btn btn-block btn-primary font-weight-bold my-3 py-3">You don't have any address, add one
-                    </a>
+                    <a href="{% url 'account_app:add_address' %}?next={% url 'cart_app:order_details' order.id %}" class="btn btn-block btn-primary font-weight-bold my-3 py-3">You don't have any address, add one</a>
                 {% endif %}
             </div>
-
         </div>
     </div>
     <!-- Cart End -->

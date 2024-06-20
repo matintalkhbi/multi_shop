@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views import View
 from django.http import HttpResponseBadRequest
-
+from django.shortcuts import get_object_or_404, redirect
+from django.views import View
+from django.contrib import messages
 from account_app.models import Address
 from product_app.models import Product
 from .cart_module import Cart
@@ -60,6 +61,7 @@ class OrderDetailView(View):
 
 class OrderCreationView(View):
     def get(self, request):
+
         cart = Cart(request)
         order = Order.objects.create(user=request.user, total_price=cart.total())
         for item in cart:
@@ -75,30 +77,10 @@ class OrderCreationView(View):
                 'price': item['price'],
                 # 'discount': item['discount']
             })
+        #create a function for check the paid
         Cart.remove_cart(cart)
 
         return redirect('cart_app:order_details', order.id)
-
-
-# class ApplyDiscountView(View):
-#     def post(self, request, pk):
-#         code = request.POST.get('discount_code')
-#         order = get_object_or_404(Order, id=pk)
-#         discount_code = get_object_or_404(DiscountCode, name=code)
-#         print(discount_code)
-#         if discount_code.quantity == 0:
-#             return redirect("cart_app:order_details", order.id)
-#         order.total_price -= order.total_price * discount_code.discount / 100
-#         order.save()
-#         discount_code.quantity -= 1
-#         discount_code.save()
-#         return redirect('cart_app:order_details', order.id)
-
-from django.shortcuts import get_object_or_404, redirect
-from django.views import View
-from django.contrib import messages
-from django.utils import timezone
-from .models import Order, DiscountCode
 
 
 class ApplyDiscountView(View):
@@ -155,6 +137,9 @@ class RemoveDiscountView(View):
 
         return redirect('cart_app:order_details', order.id)
 
+class OrderPaidCompleted(View):
+    def get(self,request):
+        return render(request , 'cart_app/order_response.html')
 
 sandbox = 'www'
 
@@ -168,42 +153,60 @@ phone = 'YOUR_PHONE_NUMBER'  # Optional
 # Important: need to edit for realy server.
 CallbackURL = 'http://127.0.0.1:8000/cart/verify/'
 
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+from django.views import View
+
+from django.conf import settings
+import json
+import requests
+
 
 class SendRequestView(View):
     def post(self, request, pk):
         order = get_object_or_404(Order, id=pk, user=request.user)
-        address = get_object_or_404(Address, id=pk)
+        address_id = request.POST.get('address')
+        address = get_object_or_404(Address, id=address_id)
+
         order.address = f"Address: {address.address}, Postal_Code: {address.postal_code}, Phone: {address.phone}"
+        order.is_paid = True
         order.save()
+
         request.session['order_id'] = str(order.id)
 
         data = {
             "MerchantID": settings.MERCHANT,
             "Amount": order.total_price,
-            "Description": description,
+            "Description": "Order Payment",
             "Phone": request.user.phone,
-            "CallbackURL": CallbackURL,
+            "CallbackURL": "http://yourcallbackurl.com/callback",
         }
         data = json.dumps(data)
-        # set content length by data
         headers = {'content-type': 'application/json', 'content-length': str(len(data))}
-        try:
-            response = requests.post(ZP_API_REQUEST, data=data, headers=headers, timeout=10)
+        return redirect('cart_app:order_paid')
 
-            if response.status_code == 200:
-                response = response.json()
-                if response['Status'] == 100:
-                    return {'status': True, 'url': ZP_API_STARTPAY + str(response['Authority']),
-                            'authority': response['Authority']}
-                else:
-                    return {'status': False, 'code': str(response['Status'])}
-            return response
 
-        except requests.exceptions.Timeout:
-            return {'status': False, 'code': 'timeout'}
-        except requests.exceptions.ConnectionError:
-            return {'status': False, 'code': 'connection error'}
-
+        # paid with zarin pal
+        # try:
+        #     response = requests.post("https://api.zarinpal.com/pg/v4/payment/request.json", data=data, headers=headers,
+        #                              timeout=10)
+        #
+        #     if response.status_code == 200:
+        #         response = response.json()
+        #         if response['Status'] == 100:
+        #             return HttpResponse(json.dumps(
+        #                 {'status': True, 'url': "https://www.zarinpal.com/pg/StartPay/" + str(response['Authority']),
+        #                  'authority': response['Authority']}), content_type="application/json")
+        #         else:
+        #             return HttpResponse(json.dumps({'status': False, 'code': str(response['Status'])}),
+        #                                 content_type="application/json")
+        #     return HttpResponse(json.dumps(response), content_type="application/json")
+        #
+        # except requests.exceptions.Timeout:
+        #     return HttpResponse(json.dumps({'status': False, 'code': 'timeout'}), content_type="application/json")
+        # except requests.exceptions.ConnectionError:
+        #     return HttpResponse(json.dumps({'status': False, 'code': 'connection error'}),
+        #                         content_type="application/json")
 
 
 class VerifyView(View):
