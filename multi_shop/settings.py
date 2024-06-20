@@ -109,11 +109,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'fa-ir'
 
-TIME_ZONE = 'UTC'
+# settings.py
 
-USE_I18N = True
-
+TIME_ZONE = 'Asia/Tehran'
 USE_TZ = True
+USE_I18N = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -132,3 +132,12 @@ AUTH_USER_MODEL = "account_app.User"
 
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
                            ]
+from django.contrib.messages import constants as message_constants
+
+MESSAGE_TAGS = {
+    message_constants.DEBUG: 'debug',
+    message_constants.INFO: 'info',
+    message_constants.SUCCESS: 'success',
+    message_constants.WARNING: 'warning',
+    message_constants.ERROR: 'danger',
+}

@@ -10,6 +10,7 @@ urlpatterns = [
     path('delete/<str:pk>', views.CartDeleteView.as_view(), name='cart_delete'),
     path('order/<int:id>' , views.OrderDetailView.as_view(), name='order_details'),
     path('order/add', views.OrderCreationView.as_view(), name='order_creation'),
-    path('applydiscount/<int:pk>', views.ApplyDiscountView.as_view(), name='apply_discount'),
+    path('apply-discount/<int:pk>/', views.ApplyDiscountView.as_view(), name='apply_discount'),
+    path('remove-discount/<int:pk>/', views.RemoveDiscountView.as_view(), name='remove_discount'),
     path('sendrequest', views.SendRequestView.as_view(), name='send_request'),
 ]

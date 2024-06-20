@@ -93,6 +93,7 @@ class OrderCreationView(View):
 from django.shortcuts import get_object_or_404, redirect
 from django.views import View
 from django.contrib import messages
+from django.utils import timezone
 from .models import Order, DiscountCode
 
 class ApplyDiscountView(View):
@@ -101,17 +102,24 @@ class ApplyDiscountView(View):
         order = get_object_or_404(Order, id=pk)
 
         if order.discount_code:
-            # اضافه کردن پیام خطا
             messages.error(request, 'A discount code has already been applied to this order.')
             return redirect("cart_app:order_details", order.id)
 
-        discount_code = get_object_or_404(DiscountCode, name=code)
-
-        if discount_code.quantity == 0:
-            messages.error(request, 'This discount code is no longer available.')
+        try:
+            discount_code = DiscountCode.objects.get(name=code)
+        except DiscountCode.DoesNotExist:
+            messages.error(request, 'The discount code you entered does not exist.')
             return redirect("cart_app:order_details", order.id)
 
-        order.total_price -= order.total_price * discount_code.discount / 100
+        if not discount_code.is_valid():
+            messages.error(request, 'The discount code is either expired or no longer available.')
+            return redirect("cart_app:order_details", order.id)
+
+        # Save the original price before applying the discount
+        if order.original_price == 0:
+            order.original_price = order.total_price
+
+        order.total_price = order.original_price - (order.original_price * discount_code.discount / 100)
         order.discount_code = discount_code
         order.save()
 
@@ -121,9 +129,25 @@ class ApplyDiscountView(View):
         messages.success(request, 'Discount code applied successfully.')
         return redirect('cart_app:order_details', order.id)
 
+class RemoveDiscountView(View):
+    def post(self, request, pk):
+        order = get_object_or_404(Order, id=pk)
 
+        if order.discount_code:
+            discount_code = order.discount_code
+            order.total_price = order.original_price  # Reset to original price
+            order.discount_code = None
+            order.original_price = 0  # Clear the original price
+            order.save()
 
+            discount_code.quantity += 1
+            discount_code.save()
 
+            messages.success(request, 'Discount code removed successfully.')
+        else:
+            messages.error(request, 'No discount code to remove.')
+
+        return redirect('cart_app:order_details', order.id)
 
 
 

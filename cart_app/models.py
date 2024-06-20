@@ -1,12 +1,25 @@
 from django.db import models
 from account_app.models import User
 from product_app.models import Product, Size, Color
-
+from django.utils import timezone
 
 class DiscountCode(models.Model):
-    name = models.CharField(max_length=50 , unique=True)
+    name = models.CharField(max_length=50, unique=True)
     discount = models.SmallIntegerField(default=0)
     quantity = models.SmallIntegerField(default=1)
+    start_date = models.DateTimeField(null=True, blank=True)
+    end_date = models.DateTimeField(null=True, blank=True)
+
+    def is_valid(self):
+        now = timezone.now()
+        if self.start_date and self.end_date:
+            return self.start_date <= now <= self.end_date and self.quantity > 0
+        elif self.start_date:
+            return self.start_date <= now and self.quantity > 0
+        elif self.end_date:
+            return now <= self.end_date and self.quantity > 0
+        else:
+            return self.quantity > 0
 
     def __str__(self):
         return self.name
@@ -14,13 +27,16 @@ class DiscountCode(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
     total_price = models.IntegerField(default=0)
+    original_price = models.IntegerField(default=0)  # Added field for storing original price
     created = models.DateTimeField(auto_now_add=True)
     is_paid = models.BooleanField(default=False)
     address_link = models.URLField(blank=True, null=True)
     discount_code = models.ForeignKey(DiscountCode, null=True, blank=True, on_delete=models.SET_NULL, related_name='orders')
 
     def __str__(self):
-        return self.user.phone
+        return self.user.username
+
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')

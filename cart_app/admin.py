@@ -14,5 +14,5 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(DiscountCode)
 class DiscountCodeAdmin(admin.ModelAdmin):
-    list_display = ('name' , 'quantity' , 'discount')
+    list_display = ('name' , 'quantity' , 'discount' ,'start_date' , 'end_date')
 
