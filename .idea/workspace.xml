@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f83bf5f7-d470-4323-beb6-2a14c9518d9e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cart_app/templates/cart_app/order_response.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart_app/templates/cart_app/order_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/templates/cart_app/order_detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/account_app/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cart_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart_app/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/multi_shop/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/multi_shop/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,7 +169,7 @@
       <workItem from="1718176060508" duration="12448000" />
       <workItem from="1718277100997" duration="357000" />
       <workItem from="1718808550975" duration="2600000" />
-      <workItem from="1718876524771" duration="9337000" />
+      <workItem from="1718876524771" duration="10816000" />
     </task>
     <task id="LOCAL‎−۰۰۰۰۱" summary="fixup! login regester template and view and model sms view sms">
       <option name="closed" value="true" />

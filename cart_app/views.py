@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect
@@ -59,7 +60,7 @@ class OrderDetailView(View):
         return render(request, 'cart_app/order_detail.html', {'order': order})
 
 
-class OrderCreationView(View):
+class OrderCreationView(LoginRequiredMixin,View):
     def get(self, request):
 
         cart = Cart(request)
@@ -83,7 +84,7 @@ class OrderCreationView(View):
         return redirect('cart_app:order_details', order.id)
 
 
-class ApplyDiscountView(View):
+class ApplyDiscountView(LoginRequiredMixin,View):
     def post(self, request, pk):
         code = request.POST.get('discount_code')
         order = get_object_or_404(Order, id=pk)
@@ -117,7 +118,7 @@ class ApplyDiscountView(View):
         return redirect('cart_app:order_details', order.id)
 
 
-class RemoveDiscountView(View):
+class RemoveDiscountView(LoginRequiredMixin,View):
     def post(self, request, pk):
         order = get_object_or_404(Order, id=pk)
 
@@ -137,7 +138,7 @@ class RemoveDiscountView(View):
 
         return redirect('cart_app:order_details', order.id)
 
-class OrderPaidCompleted(View):
+class OrderPaidCompleted(LoginRequiredMixin,View):
     def get(self,request):
         return render(request , 'cart_app/order_response.html')
 
@@ -162,7 +163,7 @@ import json
 import requests
 
 
-class SendRequestView(View):
+class SendRequestView(LoginRequiredMixin,View):
     def post(self, request, pk):
         order = get_object_or_404(Order, id=pk, user=request.user)
         address_id = request.POST.get('address')
@@ -209,7 +210,7 @@ class SendRequestView(View):
         #                         content_type="application/json")
 
 
-class VerifyView(View):
+class VerifyView(LoginRequiredMixin,View):
     def get(self, request, pk):
         order_id = request.session.get('order_id')
         order = Order.objects.get(id=int(order_id))
