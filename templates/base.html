@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load render_partial %}
 {% include 'includes/head.html' %}
 
 
@@ -10,7 +10,8 @@
 
 
 <!-- Navbar Start -->
-{% include 'includes/navbar.html' %}
+{#{% include 'includes/navbar.html' %}#}
+{% render_partial 'product_app:navbar' %}
 <!-- Navbar End -->
 
 
