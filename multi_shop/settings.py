@@ -146,3 +146,11 @@ MESSAGE_TAGS = {
 MERCHANT = "00000000-0000-0000-0000-000000000000"
 
 SANDBOX = True
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
+}
