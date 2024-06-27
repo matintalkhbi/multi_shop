@@ -19,3 +19,7 @@ class NavBarPartialView(TemplateView):
         context = super(NavBarPartialView, self).get_context_data()
         context['categories'] = Category.objects.all()
         return context
+
+class ProductListView(ListView):
+    template_name = "product_list.html"
+    queryset = Product.objects.all()
