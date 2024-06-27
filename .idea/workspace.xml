@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f83bf5f7-d470-4323-beb6-2a14c9518d9e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/product_app/migrations/0007_alter_product_discount.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product_app/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product_app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/product_app/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/product_app/templates/product_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/product_app/templates/product_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/product_app/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/product_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/product_app/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,8 +23,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -178,7 +178,7 @@
       <workItem from="1718915729996" duration="816000" />
       <workItem from="1719270412277" duration="19000" />
       <workItem from="1719411210543" duration="6368000" />
-      <workItem from="1719475335618" duration="2946000" />
+      <workItem from="1719475335618" duration="7257000" />
     </task>
     <task id="LOCAL‎−۰۰۰۰۱" summary="fixup! login regester template and view and model sms view sms">
       <option name="closed" value="true" />
