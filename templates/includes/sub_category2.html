@@ -1,0 +1,46 @@
+{% for category in category.subs.all %}
+	{{ sub }}
+
+
+<div class="nav-item dropdown dropright">
+    <a href="#" class="nav-link dropdown-toggle"
+       data-toggle="dropdown">{{ category.title }} <i
+            class="fa fa-angle-right float-right mt-1"></i></a>
+    <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
+        {% if category.subs.all %}
+            {% include 'includes/sub_category.html' %}
+
+        {% endif %}
+
+    </div>
+</div>
+{% endfor %}
+
+            {#            <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"#}
+            {#                 id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">#}
+            {#                <div class="navbar-nav w-100">#}
+            {#                    {% for category in categories %}#}
+            {#                        {% if not category.parent %}#}
+            {#                            <a href="" class="nav-item nav-link">{{ category.title }}</a>#}
+            {#                            {% if category.subs.all %}#}
+            {#                                {% if category.subs.all %}#}
+            {#                                    <div class="nav-item dropdown dropright">#}
+            {#                                        <a href="#" class="nav-link dropdown-toggle"#}
+            {#                                           data-toggle="dropdown">{{ category.title }} <i#}
+            {#                                                class="fa fa-angle-right float-right mt-1"></i></a>#}
+            {#                                        <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">#}
+            {#                                            {% include 'includes/sub_category.html' %}#}
+            {##}
+            {#                                        </div>#}
+            {#                                    </div>#}
+            {#                                {% endif %}#}
+            {##}
+            {#                            {% else %}#}
+            {##}
+            {#                            {% endif %}#}
+            {#                        {% endif %}#}
+            {#                    {% endfor %}#}
+            {##}
+            {##}
+            {#                </div>#}
+            {#            </nav>#}

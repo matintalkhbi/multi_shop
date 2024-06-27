@@ -5,16 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f83bf5f7-d470-4323-beb6-2a14c9518d9e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/product_app/migrations/0005_category.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product_app/migrations/0006_product_category.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/includes/sub_category.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/includes/sub_category2.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/multi_shop/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/multi_shop/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product_app/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/product_app/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product_app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/product_app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/product_app/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/product_app/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/includes/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/includes/navbar.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,15 +22,15 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="38d3e49a33e2b30152dcd7c0a8ad8fe815beb7dc" />
+        <entry key="$PROJECT_DIR$" value="6e0231b80f2c5142b30dbcb97defb6de44056c54" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -64,7 +58,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Matin/Desktop/my site/django/multi_shop/multi_shop/cart_app/templates/cart_app&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Matin/Desktop/my site/django/multi_shop/multi_shop/templates/includes&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -76,6 +70,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Matin\Desktop\my site\django\multi_shop\multi_shop\templates\includes" />
       <recent name="C:\Users\Matin\Desktop\my site\django\multi_shop\multi_shop\cart_app\templates\cart_app" />
       <recent name="C:\Users\Matin\Desktop\my site\django\multi_shop\multi_shop\account_app\templates\account_app" />
       <recent name="C:\Users\Matin\Desktop\my site\django\multi_shop\multi_shop\home_app\templates" />
@@ -139,6 +134,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.cart_module" />
+        <item itemvalue="Python.cart_module" />
+        <item itemvalue="Python.cart_module" />
+        <item itemvalue="Python.cart_module" />
       </list>
     </recent_temporary>
   </component>
@@ -178,7 +176,8 @@
       <workItem from="1718876524771" duration="10816000" />
       <workItem from="1718915729996" duration="816000" />
       <workItem from="1719270412277" duration="19000" />
-      <workItem from="1719411210543" duration="3302000" />
+      <workItem from="1719411210543" duration="6368000" />
+      <workItem from="1719475335618" duration="871000" />
     </task>
     <task id="LOCAL‎−۰۰۰۰۱" summary="fixup! login regester template and view and model sms view sms">
       <option name="closed" value="true" />
