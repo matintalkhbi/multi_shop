@@ -29,12 +29,14 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE , blank=True, null=True)
     description = models.TextField()
     price = models.SmallIntegerField()
-    discount = models.SmallIntegerField()
+    discount = models.SmallIntegerField(blank=True, null=True)
     image = models.ImageField(upload_to='products/')
     size = models.ManyToManyField(Size, related_name='products', blank=True , null=True)
     color = models.ManyToManyField(Color, related_name='products', blank=True , null=True)
 
-
+    def discount_price(self):
+        if self.discount:
+            return self.price * (100-self.discount)/100
     def __str__(self):
         return self.title
 

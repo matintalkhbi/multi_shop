@@ -23,3 +23,4 @@ class NavBarPartialView(TemplateView):
 class ProductListView(ListView):
     template_name = "product_list.html"
     queryset = Product.objects.all()
+    context_object_name = 'product_list'
